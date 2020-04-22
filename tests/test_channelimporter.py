@@ -10,6 +10,12 @@ class TestChannelImporter(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         Logger.create_logger(None, str(cls), min_log_level=0)
+        from resources.lib.textures import TextureHandler
+        from resources.lib.retroconfig import Config
+        from resources.lib.urihandler import UriHandler
+
+        UriHandler.create_uri_handler(ignore_ssl_errors=False)
+        TextureHandler.set_texture_handler(Config, Logger.instance(), UriHandler.instance())
 
     @classmethod
     def tearDownClass(cls):
@@ -39,4 +45,12 @@ class TestChannelImporter(unittest.TestCase):
         instance = ChannelIndex.get_register()
         channels = instance.get_channels()
         self.assertGreater(len(channels), 50)
-        self.assertTrue(os.path.isfile(self.index_json))
+
+    def test_channel(self):
+        from resources.lib.helpers.channelimporter import ChannelIndex
+        instance = ChannelIndex.get_register()
+        from resources.lib.textures import TextureHandler
+        channel = instance.get_channel("chn_nos2010", "uzgjson")
+        self.assertIsNotNone(channel)
+        channel = instance.get_channel("chn_nos2010", "uzgjson2")
+        self.assertIsNone(channel)
