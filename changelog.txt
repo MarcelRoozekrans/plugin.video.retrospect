@@ -1,17 +1,14 @@
-[B]Retrospect v5.2.3 - Changelog - 2020-05-07[/B]
+[B]Retrospect v5.2.4 - Changelog - 2020-05-12[/B]
 
-This new version of Retrospect fixes some channel related issues and some minor core refactoring.
+This new version of Retrospect shuffles some of the channel load logic and mostly fixes an issue in the NPO live channels.
 
 [B]Framework related[/B]
-* Fixed: issue where shutil.copy() or shutil.move() no longer overrides existing files in Py3
-* Fixed: issue where an empty favourite list would replace the PickleStore cache for the mainlist (Fixes #1365)
-* Changed: Use `inputstream` instead of `inputstreamaddon` for Matrix and up
+* Added: option to limit certain settings to only some channel in a channel set
+* Added: option to generate a channel guid for a setting in a channel set
 
 [B]GUI/Settings/Language related[/B]
 _None_
 
 [B]Channel related[/B]
-* Fixed: Kijk.nl PersistedQueries seem unstable
-* Fixed: Include "standalone" video's for Dplay (Fixes #1361)
-* Fixed: For some ViaFree streams no subtitles were present (Fixes #1362)
-* Fixed: failed parsing of showlisting due to UTC timestamp (Fixes #1369)
+* Added: option to specify a login for Dplay.se (Fixes #1364)
+* Fixed: don't group special folders for kijk.nl (Fixes #1377)

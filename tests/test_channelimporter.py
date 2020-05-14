@@ -50,7 +50,37 @@ class TestChannelImporter(unittest.TestCase):
         instance = ChannelIndex.get_register()
 
         # Fetch a simple channel
-        channel = instance.get_channel("chn_svt", "svt")
+        channel = instance.get_channel("channel.se.svt", "svt")
         self.assertIsNotNone(channel)
-        channel = instance.get_channel("chn_svt", "svt2")
+        channel = instance.get_channel("channel.se.svt", "svt2")
         self.assertIsNone(channel)
+
+    def test_ignored_channel(self):
+        from resources.lib.helpers.channelimporter import ChannelIndex
+        instance = ChannelIndex.get_register()
+
+        # Fetch a simple channel
+        channel = instance.get_channel("channel.nos.schooltv", "schooltv")
+        self.assertIsNone(channel)
+
+    def test_categories(self):
+        from resources.lib.helpers.channelimporter import ChannelIndex
+        instance = ChannelIndex.get_register()
+        cats = instance.get_categories()
+        self.assertGreaterEqual(len(cats), 7)
+
+    def test_channel_id(self):
+        from resources.lib.helpers.channelimporter import ChannelIndex
+        instance = ChannelIndex.get_register()
+
+        # Fetch a simple channel
+        channel = instance.get_channel("channel.se.svt", "svt")
+        self.assertEqual("channel.se.svt.svt", channel.id)
+
+    def test_channel_id_no_code(self):
+        from resources.lib.helpers.channelimporter import ChannelIndex
+        instance = ChannelIndex.get_register()
+
+        # Fetch a simple channel without channel code
+        channel = instance.get_channel("channel.be.een", None)
+        self.assertEqual("channel.be.een", channel.id)

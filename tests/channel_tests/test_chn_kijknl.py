@@ -5,7 +5,7 @@ from tests.channel_tests.channeltest import ChannelTest
 class TestKijkNlChannel(ChannelTest):
     # noinspection PyPep8Naming
     def __init__(self, methodName):  # NOSONAR
-        super(TestKijkNlChannel, self).__init__(methodName, "chn_kijknl", None)
+        super(TestKijkNlChannel, self).__init__(methodName, "channel.sbsnl.kijknl", None)
 
     def test_sbs6(self):
         from resources.lib.helpers.channelimporter import ChannelIndex
@@ -26,6 +26,18 @@ class TestKijkNlChannel(ChannelTest):
         from resources.lib.helpers.channelimporter import ChannelIndex
         chn = ChannelIndex.get_register().get_channel(self._channel, "net5")
         self.assertIsNotNone(chn)
+
+    def test_json_video_update_embedded(self):
+        from resources.lib.helpers.channelimporter import ChannelIndex
+        self.channel = ChannelIndex.get_register().get_channel(self._channel, "sbs")
+        self._test_video_url(
+            "https://embed.kijk.nl/api/video/vW4tShkyXsd?id=kijkapp&format=DASH&drm=CENC")
+
+    def test_json_video_update_404_embedded(self):
+        from resources.lib.helpers.channelimporter import ChannelIndex
+        self.channel = ChannelIndex.get_register().get_channel(self._channel, "sbs")
+        self._test_video_url(
+            "https://embed.kijk.nl/api/video/S0t2RpYw4Ts?id=kijkapp&format=DASH&drm=CENC")
 
     def test_channel_exists(self):
         self.assertIsNotNone(self.channel)
